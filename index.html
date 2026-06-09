@@ -641,7 +641,55 @@ div class="contador">
 
     <div id="countdown"></div>
 
-</div>
+
+
+
+<script>
+
+function mostrar(id){
+
+    document
+    .querySelectorAll('.aba')
+    .forEach(div => div.classList.remove('ativa'));
+
+    document
+    .getElementById(id)
+    .classList.add('ativa');
+}
+
+const dataEvento = new Date("2026-07-11T19:30:00");
+
+function atualizarContador(){
+
+    const agora = new Date();
+    const diferenca = dataEvento - agora;
+
+    const dias = Math.floor(
+        diferenca / (1000 * 60 * 60 * 24)
+    );
+
+    const horas = Math.floor(
+        (diferenca % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
+
+    document.getElementById("countdown").innerHTML =
+        `${dias} dias e ${horas} horas`;
+}
+
+atualizarContador();
+setInterval(atualizarContador,1000);
+
+</script>
+
+
+
+
+
+
+
+
+
 
     <h2>📢 Próximos Eventos</h2>
 
@@ -749,43 +797,6 @@ div class="contador">
 
 </div>
 
-<script>
-
-function mostrar(id){
-
-    document
-    .querySelectorAll('.aba')
-    .forEach(div => div.classList.remove('ativa'));
-
-    document
-    .getElementById(id)
-    .classList.add('ativa');
-}
-
-const dataEvento = new Date("2026-07-11T19:30:00");
-
-function atualizarContador(){
-
-    const agora = new Date();
-    const diferenca = dataEvento - agora;
-
-    const dias = Math.floor(
-        diferenca / (1000 * 60 * 60 * 24)
-    );
-
-    const horas = Math.floor(
-        (diferenca % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60)
-    );
-
-    document.getElementById("countdown").innerHTML =
-        `${dias} dias e ${horas} horas`;
-}
-
-atualizarContador();
-setInterval(atualizarContador,1000);
-
-</script>
 <footer>
     © 2026 Igreja Encontros de Fé
 </footer>
