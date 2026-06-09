@@ -495,6 +495,64 @@ iframe{
     transform:scale(1.03);
 }
 
+
+
+
+
+
+
+.contador {
+    background: linear-gradient(135deg,#003366,#0055aa);
+    color:white;
+    text-align:center;
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+#countdown{
+    font-size:2rem;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.anuncios-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.anuncio-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.anuncio-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.anuncio-card span{
+    font-size:2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -572,14 +630,13 @@ iframe{
 </div>
 </div>
 
-<div id="anuncios" class="aba">
-    <div class="evento-destaque">
+<div class="contador">
 
-    <h3>🎉 Próximo Evento</h3>
+    <h2>🔥 Próximo Evento</h2>
 
-    <p>
-        Jantar de Casais • 13/06
-    </p>
+    <h3>Jovens Portão + Estância Velha</h3>
+
+    <div id="countdown"></div>
 
 </div>
 
@@ -690,6 +747,7 @@ iframe{
 </div>
 
 <script>
+
 function mostrar(id){
 
     document
@@ -700,6 +758,30 @@ function mostrar(id){
     .getElementById(id)
     .classList.add('ativa');
 }
+
+const dataEvento = new Date("2026-07-11T19:30:00");
+
+function atualizarContador(){
+
+    const agora = new Date();
+    const diferenca = dataEvento - agora;
+
+    const dias = Math.floor(
+        diferenca / (1000 * 60 * 60 * 24)
+    );
+
+    const horas = Math.floor(
+        (diferenca % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
+
+    document.getElementById("countdown").innerHTML =
+        `${dias} dias e ${horas} horas`;
+}
+
+atualizarContador();
+setInterval(atualizarContador,1000);
+
 </script>
 <footer>
     © 2026 Igreja Encontros de Fé
