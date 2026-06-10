@@ -494,33 +494,41 @@ iframe{
 .fotos img:hover{
     transform:scale(1.03);
 }
-
-
-
-
-
-
-
-.contador {
-    background: linear-gradient(135deg,#003366,#0055aa);
+footer{
+    background:#003366;
     color:white;
     text-align:center;
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    padding:20px;
+    margin-top:40px;
 }
-
-#countdown{
-    font-size:2rem;
-    font-weight:bold;
-    margin-top:10px;
-}
-
 .anuncios-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:20px;
+    margin-top:20px;
+}
+
+.anuncio-card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.anuncio-card:hover{
+    transform:translateY(-8px);
+}
+
+.anuncio-card span{
+    font-size:2rem;
+}
+.anuncios-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+    margin-top:20px;
 }
 
 .anuncio-card{
@@ -530,6 +538,7 @@ iframe{
     text-align:center;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
     transition:.3s;
+    border-top:5px solid #003366;
 }
 
 .anuncio-card:hover{
@@ -538,20 +547,42 @@ iframe{
 }
 
 .anuncio-card span{
-    font-size:2rem;
+    font-size:2.5rem;
+    display:block;
+    margin-bottom:10px;
+}
+#contador{
+    margin-top:15px;
+    font-size:1.4rem;
+    font-weight:bold;
+}
+#contador{
+    margin-top:15px;
+    font-size:1.3rem;
+    font-weight:bold;
 }
 
+#nomeEvento{
+    font-size:1.2rem;
+    margin-top:10px;
+}
+.botao-eventos{
+    display:inline-block;
+    margin-top:15px;
+    background:#003366;
+    color:white;
+    padding:12px 20px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
 
-
-
-
-
-
-
-
-
-
-
+.botao-eventos:hover{
+    background:#0055aa;
+    transform:translateY(-3px);
+}
 
 </style>
 </head>
@@ -615,6 +646,28 @@ iframe{
 
 </div>
 
+
+
+
+
+<div class="evento-destaque">
+
+    <h2>🎉 Próximo Evento</h2>
+
+    <p id="nomeEventoInicio"></p>
+
+    <div id="contadorInicio"></div>
+
+    <a class="botao-eventos" onclick="mostrar('anuncios')">
+        Ver próximos eventos
+    </a>
+
+</div>
+
+
+
+
+
    <div class="localizacao-card">
 
     <h2>📍 Localização</h2>
@@ -631,63 +684,15 @@ iframe{
 </div>
 
 <div id="anuncios" class="aba">
-       
+    <div class="evento-destaque">
 
-    <h2>🔥 Próximo Evento</h2>
+    <h3>🎉 Próximo Evento</h3>
 
-    <h3>Jantar de Casais</h3>
+    <p id="nomeEvento"></p>
 
-    <div id="countdown"></div>
+    <div id="contador"></div>
 
-
-
-
-<script>
-
-function mostrar(id){
-
-    document
-    .querySelectorAll('.aba')
-    .forEach(div => div.classList.remove('ativa'));
-
-    document
-    .getElementById(id)
-    .classList.add('ativa');
-}
-
-const dataEvento = new Date("2026-07-11T19:30:00");
-
-function atualizarContador(){
-
-    const agora = new Date();
-    const diferenca = dataEvento - agora;
-
-    const dias = Math.floor(
-        diferenca / (1000 * 60 * 60 * 24)
-    );
-
-    const horas = Math.floor(
-        (diferenca % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60)
-    );
-
-    document.getElementById("countdown").innerHTML =
-        `${dias} dias e ${horas} horas`;
-}
-
-atualizarContador();
-setInterval(atualizarContador,1000);
-
-</script>
-
-
-
-
-
-
-
-
-
+</div>
 
     <h2>📢 Próximos Eventos</h2>
 
@@ -764,10 +769,11 @@ setInterval(atualizarContador,1000);
         class="contato-btn"
     >
         💬 WhatsApp
+    
     </a>
+    
 
-
-    <h2>📱 Redes Sociais</h2>
+    <p><h2>📱 Redes Sociais</h2></p>
 
     <div class="redes-grid">
 
@@ -795,6 +801,86 @@ setInterval(atualizarContador,1000);
 
 </div>
 
+<script>
+
+function mostrar(id){
+
+    document
+    .querySelectorAll('.aba')
+    .forEach(div => div.classList.remove('ativa'));
+
+    document
+    .getElementById(id)
+    .classList.add('ativa');
+}
+
+const eventos = [
+    {
+        nome: "Jantar de Casais",
+        data: new Date("2026-06-13T19:30:00")
+    },
+    {
+        nome: "Jovens Portão + Estância Velha",
+        data: new Date("2026-07-11T19:30:00")
+    },
+    {
+        nome: "Evangelismo",
+        data: new Date("2026-07-25T09:00:00")
+    }
+];
+
+function atualizarContador(){
+
+    const agora = new Date();
+
+    const proximoEvento = eventos.find(
+        evento => evento.data > agora
+    );
+
+    if(!proximoEvento){
+        return;
+    }
+
+    const diferenca = proximoEvento.data - agora;
+
+    const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+
+    const horas = Math.floor(
+        (diferenca % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
+
+    const minutos = Math.floor(
+        (diferenca % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
+
+    const textoContador =
+        `⏳ ${dias} dias • ${horas} horas • ${minutos} min`;
+
+    // 📢 ABA ANÚNCIOS
+    const nome1 = document.getElementById("nomeEvento");
+    const cont1 = document.getElementById("contador");
+
+    if(nome1 && cont1){
+        nome1.innerHTML = proximoEvento.nome;
+        cont1.innerHTML = textoContador;
+    }
+
+    // 🏠 PÁGINA INÍCIO
+    const nome2 = document.getElementById("nomeEventoInicio");
+    const cont2 = document.getElementById("contadorInicio");
+
+    if(nome2 && cont2){
+        nome2.innerHTML = proximoEvento.nome;
+        cont2.innerHTML = textoContador;
+    }
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
+
+</script>
 <footer>
     © 2026 Igreja Encontros de Fé
 </footer>
